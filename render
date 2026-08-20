@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: telegram-prank-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 0 bot:app
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
